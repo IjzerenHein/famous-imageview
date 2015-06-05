@@ -97,12 +97,9 @@ define(function(require, exports, module) {
         var props = this.getProperties();
         if (this._imageUrl) {
             var imageUrl = this._imageUrl;
-            // url encode '(' and ')'
-            if ((imageUrl.indexOf('(') >= 0) || (imageUrl.indexOf(')') >= 0)) {
-                imageUrl = imageUrl.split('(').join('%28');
-                imageUrl = imageUrl.split(')').join('%29');
-            }
-            props.backgroundImage = 'url(' + imageUrl + ')';
+            // replace single quotes to prevent string conflicts in css
+            imageUrl.replace(/'/g, '"');
+            props.backgroundImage = 'url(\'' + imageUrl + '\')';
         }
         else {
             props.backgroundImage = '';
